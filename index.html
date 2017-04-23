@@ -15,8 +15,11 @@
         <p name="example">
             <strong>Example</strong></p>
         <div class="player">
-            <p><a href="#example" onclick="MIDIjs.play('sample_13.mid');">Play</a><p>
-            <a href="#" onclick="MIDIjs.stop();">Stop Playback</a></p>
+            <p><input type="text" placeholder="enter filename e.g. sample_0.mid"
+                id="filename_input" onkeydown="if (event.keyCode == 13) document.getElementById('play_btn').click()"/><p>
+            <!-- <p><a href="#example" onclick="MIDIjs.play('sample_13.mid');">Play</a><p> -->
+            <p><a href="#example" id="play_btn" onclick='MIDIjs.play(document.getElementById("filename_input").value);'>click here or press enter in the textbox to play</a><p>
+            <a href="#" onclick="MIDIjs.stop();">stop playback</a></p>
             
             <div style="font-size: 71%;font-size: 71%">
                 MIDIjs status: <span id="MIDIjs.message" style="color: green">Initializing ...</span>
