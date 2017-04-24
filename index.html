@@ -3,12 +3,14 @@
     <head>
         <title>MIDIjs - Home</title>
         <style type="text/css">
-            .source_code { background-color: #bbbbff; color:black } 
+            .source_code { background-color: #bbbbff; color:black }
             .player { background-color: #bbbbff; color:black; border: 2px solid grey;}
         </style>
 
 <!-- <script type='text/javascript' src='http://www.midijs.net/lib/midi.js'></script> -->
 <script type='text/javascript' src='/jslib/midi.js'></script>
+<!-- jQuery -->
+<script src="vendor/jquery/jquery.min.js"></script>
 
 </head>
     <body>
@@ -20,13 +22,15 @@
             <!-- <p><a href="#example" onclick="MIDIjs.play('sample_13.mid');">Play</a><p> -->
             <p><a href="#example" id="play_btn" onclick='MIDIjs.play(document.getElementById("filename_input").value);'>click here or press enter in the textbox to play</a><p>
             <a href="#" onclick="MIDIjs.stop();">stop playback</a></p>
-            
+
             <div style="font-size: 71%;font-size: 71%">
                 MIDIjs status: <span id="MIDIjs.message" style="color: green">Initializing ...</span>
                 <div>
                     MIDIjs audio time (s): <span id="MIDIjs.audio_time" style="color: green">-</span></div>
             </div>
         </div>
+
+        <div class="auto-generated-buttons"></div>
 
 <script type='text/javascript'>
   var message_span = document.getElementById('MIDIjs.message');
@@ -43,5 +47,24 @@
      time_span.innerHTML = player_event.time;
   };
 </script>
+
+<script>
+  $.ajax({
+    url: "/samples",
+    success: function(data){
+       $(data).find("a:contains(.mid)").each(function(){
+          var samplePath = '/samples/' + $(this).attr("href");
+          var sampleName = $(this).attr("href");
+          var hrefID = "#example";
+          var playButton = 'play_btn';
+          var onClickEvent = 'MIDIjs.play("'+ samplePath + '");'
+
+          $('<p><a href=' + hrefID + ' id=' + playButton + ' onclick=' + onClickEvent + ' class="button">' + sampleName + '</a><p>').appendTo('.auto-generated-buttons')
+
+       });
+  }
+  });
+</script>
+
     </body>
 </html>
